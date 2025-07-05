@@ -38,4 +38,5 @@ enum NetworkError: Error {
     case serviceError(String)
     case urlError(String)
     case decodingError(String)
+    case invalidData
 }

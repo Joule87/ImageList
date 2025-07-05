@@ -13,9 +13,7 @@ struct ProductRowView: View {
     var body: some View {
         VStack {
             HStack(spacing: 16) {
-                Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFit()
+                imageView
                     .frame(width: 44, height: 44)
                 VStack(alignment: .leading) {
                     Text(viewModel.title)
@@ -26,6 +24,24 @@ struct ProductRowView: View {
             }
             .padding(.vertical, 8)
             Divider()
+        }
+        .task {
+            await viewModel.fetchImage()
+        }
+    }
+    
+    @ViewBuilder
+    var imageView: some View {
+        switch viewModel.imageState {
+        case .isLoading:
+            ProgressView()
+        case .error:
+            Image(systemName: "xmark.circle.fill")
+                .foregroundColor(.red)
+        case .image(let image):
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
         }
     }
 }
