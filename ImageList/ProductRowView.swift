@@ -14,13 +14,8 @@ struct ProductRowView: View {
         VStack {
             HStack(spacing: 16) {
                 imageView
-                    .frame(width: 44, height: 44)
-                VStack(alignment: .leading) {
-                    Text(viewModel.title)
-                        .font(.headline)
-                    Text(viewModel.description)
-                        .font(.caption)
-                }
+                    .frame(width: 80, height: 80)
+                ProductView(title: viewModel.title, description: viewModel.description, price: viewModel.price)
             }
             .padding(.vertical, 8)
             Divider()

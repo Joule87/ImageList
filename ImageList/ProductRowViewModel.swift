@@ -19,16 +19,22 @@ final class ProductRowViewModel: ObservableObject {
     @MainActor @Published private(set) var imageState: ImageState = .isLoading
     private var imageLoader: RemoveImageLoader
     
-    init(title: String, description: String, imageURL: String, imageLoader: RemoveImageLoader = ImageLoader()) {
+    let title: String
+    let description: String
+    let price: Double
+    private let imageStringURL: String
+    
+    init(title: String,
+         description: String,
+         price: Double,
+         imageURL: String,
+         imageLoader: RemoveImageLoader = ImageLoader()) {
         self.title = title
         self.description = description
+        self.price = price
         self.imageStringURL = imageURL
         self.imageLoader = imageLoader
     }
-    
-    let title: String
-    let description: String
-    private let imageStringURL: String
     
     @MainActor
     func fetchImage() async {

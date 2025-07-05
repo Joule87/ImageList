@@ -11,37 +11,49 @@ struct ProductsView: View {
     @StateObject var viewModel: ProductsViewModel = .init()
     
     var body: some View {
-        ZStack {
-            Color.cyan.edgesIgnoringSafeArea(.all).opacity(0.1)
-            VStack {
-                Text("Products")
-                    .font(.largeTitle)
-                Spacer()
-                if viewModel.isLoaing {
-                    ProgressView()
-                } else {
-                    content
+            NavigationStack {
+                VStack {
+                    if viewModel.isLoaing {
+                        ProgressView()
+                    } else {
+                        content
+                    }
                 }
-                Spacer()
+                .navigationTitle(
+                    Text("Products")
+                )
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(for: Product.self) { product in
+                    ProductView(title: product.title,
+                                description: product.description,
+                                price: product.price)
+                }
             }
-        }
         .task {
             await viewModel.fetchProducts()
         }
     }
     
-    var content: some View {
+    private var content: some View {
         ScrollView {
             LazyVStack(alignment: .leading) {
                 ForEach(viewModel.products, id: \.id) { product in
-                    ProductRowView(viewModel: .init(title: product.title,
-                                                    description: product.description,
-                                                    imageURL: product.image)
-                    )
+                    makeProductRowView(with: product)
                 }
             }
         }
         .padding()
+    }
+    
+    private func makeProductRowView(with product: Product) -> some View {
+        NavigationLink(value: product) {
+            ProductRowView(viewModel: .init(title: product.title,
+                                            description: product.description,
+                                            price: product.price,
+                                            imageURL: product.image)
+            )
+        }
+        .buttonStyle(.plain)
     }
 }
 
