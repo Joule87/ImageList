@@ -34,11 +34,13 @@ struct ProductView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.green)
             }
+            
             .padding()
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
         .contentShape(Rectangle())
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 

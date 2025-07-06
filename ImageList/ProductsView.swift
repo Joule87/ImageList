@@ -24,10 +24,9 @@ struct ProductsView: View {
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationDestination(for: Product.self) { product in
-                    ProductView(title: product.title,
-                                description: product.description,
-                                price: product.price)
+                    ProductDetailsView(viewModel: .init(product: product))
                 }
+                .ignoresSafeArea(edges: .bottom)
             }
         .task {
             await viewModel.fetchProducts()

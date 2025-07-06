@@ -40,3 +40,7 @@ struct ProductRowView: View {
         }
     }
 }
+
+#Preview {
+    ProductRowView(viewModel: .init(title: "Asdasd", description: "ASdasdasd sad asd", price: 1.2, imageURL: ""))
+}
